@@ -1,16 +1,21 @@
 package com.zh.program.Controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zh.program.Common.authorization.annotation.Authorization;
+import com.zh.program.Common.authorization.annotation.CurrentUser;
 import com.zh.program.Common.authorization.annotation.Decrypt;
+import com.zh.program.Entrty.UserAuth;
 import com.zh.program.Entrty.Users;
 import com.zh.program.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +33,12 @@ public class TestController {
     }
 
     @Decrypt
+    @Authorization
     @ResponseBody
-    @RequestMapping("get")
-    public String get(){
+    @PostMapping("get")
+    public String get(@CurrentUser UserAuth userAuth, HttpServletRequest request){
         List<Users> list = usersService.selectAll(new HashMap<>());
+        System.out.printf(request.getAttribute("user").toString());
         return JSONObject.toJSONString(list);
     }
     @ResponseBody

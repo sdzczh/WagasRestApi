@@ -62,11 +62,13 @@ public class ProgramApplicationTests {
     public void contextLoads() throws Exception {
         String aesKey = "5274e323bb474c36";
         String secretKey = RSA.encode(aesKey, RSA.getPublikKey(BASE64.decoderByte(Constants.RSA_PUBLIC_KEY)));
+        String token = "5274e323bb474c36";
         String url = webUrl + "get";
         Map<String, Object> map = new HashMap<>();
+        map.put("aaa", "123");
         JSONObject json = new JSONObject(map);
         String params = AES.encrypt(json.toJSONString(), aesKey);
-        String result = post(url, params, null, null, secretKey);
+        String result = post(url, params, null, token, token);
         System.out.println(result);
     }
 

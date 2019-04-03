@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,11 +37,16 @@ import java.util.Map;
 @Component
 @Slf4j
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
-
-	@Resource
-	private UsersService usersService;
 	@Resource
 	private UserAuthService userAuthService;
+
+	private static AuthorizationInterceptor authorizationInterceptor;
+	@PostConstruct //通过@PostConstruct实现初始化bean之前进行的操作
+	public void init() {
+		authorizationInterceptor = this;
+		authorizationInterceptor.userAuthService = this.userAuthService;
+		// 初使化时将已静态化的testService实例化
+	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -150,7 +156,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 		Map queryMap = new HashMap();
 		UserAuth userAuth = new UserAuth();
 		queryMap.put("token",token);
-		List<UserAuth> userAuths = userAuthService.selectAll(queryMap);
+		List<UserAuth> userAuths = authorizationInterceptor.userAuthService.selectAll(queryMap);
 		userAuth = userAuths == null || userAuths.isEmpty() ? null : userAuths.get(0);
 		return userAuth;
 	}
