@@ -2,9 +2,8 @@ package com.zh.program.Controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zh.program.Common.authorization.annotation.Decrypt;
-import com.zh.program.Common.utils.RedisUtil;
-import com.zh.program.Entrty.User;
-import com.zh.program.Service.UserService;
+import com.zh.program.Entrty.Users;
+import com.zh.program.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,7 @@ public class TestController {
     @Resource
     private RedisTemplate<String, String> redis;
     @Autowired
-    private UserService userService;
+    private UsersService usersService;
 
     @RequestMapping("/view")
     public String view(){
@@ -32,14 +31,14 @@ public class TestController {
     @ResponseBody
     @RequestMapping("get")
     public String get(){
-        List<User> list = userService.findAll();
+        List<Users> list = usersService.selectAll(new HashMap<>());
         return JSONObject.toJSONString(list);
     }
     @ResponseBody
     @RequestMapping("get1")
     public String get1(){
         Map map = new HashMap();
-        List<User> list = userService.selectAll(map);
+        List<Users> list = usersService.selectAll(map);
         return JSONObject.toJSONString(list);
     }
 /*

@@ -2,7 +2,7 @@ package com.zh.program.Common.authorization.resolers;
 
 import com.zh.program.Common.Constants;
 import com.zh.program.Common.authorization.annotation.CurrentUser;
-import com.zh.program.Entrty.User;
+import com.zh.program.Entrty.UserAuth;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -25,14 +25,14 @@ public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentR
                                   ModelAndViewContainer arg1, NativeWebRequest arg2,
                                   WebDataBinderFactory arg3) throws Exception {
 		//返回用户
-		User currentUser = (User) arg2.getAttribute(Constants.CURRENT_USER, RequestAttributes.SCOPE_REQUEST);
+		UserAuth currentUser = (UserAuth) arg2.getAttribute(Constants.CURRENT_USER, RequestAttributes.SCOPE_REQUEST);
 		return currentUser;
 	}
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
 		//如果参数类型是User并且有CurrentUser注解则支持
-		return parameter.getParameterType().isAssignableFrom(User.class) && parameter.hasParameterAnnotation(CurrentUser.class);
+		return parameter.getParameterType().isAssignableFrom(UserAuth.class) && parameter.hasParameterAnnotation(CurrentUser.class);
 	}
 
 }

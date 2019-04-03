@@ -13,13 +13,14 @@ import com.zh.program.Common.utils.SignUtils;
 import com.zh.program.Common.utils.StrUtils;
 import com.zh.program.Common.utils.ValidateUtils;
 import com.zh.program.Dto.Result;
-import com.zh.program.Entrty.User;
-import com.zh.program.Service.UserService;
+import com.zh.program.Entrty.UserAuth;
+import com.zh.program.Entrty.Users;
+import com.zh.program.Service.UserAuthService;
+import com.zh.program.Service.UsersService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.thymeleaf.expression.Maps;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -37,8 +38,10 @@ import java.util.Map;
 public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
 	@Resource
-	private UserService userService;
-	
+	private UsersService usersService;
+	@Resource
+	private UserAuthService userAuthService;
+
 	@Override
 	public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
@@ -46,20 +49,20 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 		if(!(handler instanceof HandlerMethod)){
 			return true;
 		}
-		
+
 		try {
 			log.info("地址---->"+request.getRequestURI());
 			HandlerMethod handlerMethod = (HandlerMethod) handler;
 			Method method = handlerMethod.getMethod();
-			
+
 			/*获取参数*/
 			String param = request.getParameter(Constants.PARAM);
 			String sign = request.getParameter(Constants.SIGN);
 			String token = request.getHeader(Constants.TOKEN);
 			String secretkey = request.getParameter(Constants.SECRETKEY);
-			
+
 			log.info("参数---->params:{},sign={},token={},key={}",param,sign,token,secretkey);
-			
+
 			/*参数校验*/
 			if((needToCheckSign(method)&& StrUtils.isBlank(sign))
 					||(!needToCheckAuthorization(method)&&needToDecrypt(method)&&StrUtils.isBlank(secretkey))
@@ -68,7 +71,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 				returnErrorMessage(response, ResultCode.PARAM_IS_BLANK);
 				return false;
 			}
-				
+
 			if(!needToCheckAuthorization(method)){
 				Map<String, Object> paramMap = null;
 				try {
@@ -79,44 +82,44 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 					returnErrorMessage(response, ResultCode.INTERFACE_DECRYPT_ERROR);
 					return false;
 				}
-				
+
 				request.setAttribute(Constants.PARAM, paramMap);
 			}else{
-				User user = queryUserByToken(token);
-				if(user!=null){
+				UserAuth userAuth = queryUserByToken(token);
+				if(userAuth != null){
 					Map<String, Object> paramMap = null;
 					/*用户状态判断*/
 					/*if(user.getState()== GlobalParams.FORBIDDEN){
 						returnErrorMessage(response,ResultCode.USER_ACCOUNT_FORBIDDEN);
-						return false; 
+						return false;
 					}
 					if(user.getState()==GlobalParams.LOGOFF){
 						returnErrorMessage(response,ResultCode.USER_ACCOUNT_LOGOFF);
-						return false; 
+						return false;
 					}*/
-					
+
 
 					/*参数解密*/
 					try {
-						paramMap = buildPram(param, needToDecrypt(method), user.getSecretKey(),true);
+						paramMap = buildPram(param, needToDecrypt(method), userAuth.getToken(),true);
 						log.info("params---->"+ValidateUtils.replacePwdOfLog(paramMap.toString()));
 					} catch (Exception e) {
 						e.printStackTrace();
 						returnErrorMessage(response,ResultCode.INTERFACE_DECRYPT_ERROR);
 						return false;
 					}
-					
+
 					/*超时验证
 					if(paramMap.get("timeStamp")!=null&&checkTimeOut(paramMap)){
 						returnErrorMessage(response,ResultCode.INTERFACE_REQUEST_TIMEOUT);
 						return false;
 					}*/
 					/*签名验证*/
-					if(needToCheckSign(method)&&!checkSign(paramMap,user.getSecretKey(),sign)){
+					if(needToCheckSign(method)&&!checkSign(paramMap,userAuth.getToken(),sign)){
 						returnErrorMessage(response,ResultCode.INTERFACE_SIGN_ERROR);
 						return false;
 					}
-					request.setAttribute(Constants.CURRENT_USER, user);
+					request.setAttribute(Constants.CURRENT_USER, userAuth);
 					request.setAttribute(Constants.PARAM, paramMap);
 					return true;
 				}else{
@@ -124,13 +127,13 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 					return false;
 				}
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			returnErrorMessage(response, ResultCode.SYSTEM_INNER_ERROR);
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -140,16 +143,16 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 	 * @param token
 	 * @return
 	 */
-	public User queryUserByToken(String token){
+	public UserAuth queryUserByToken(String token){
 		if(StrUtils.isBlank(token)){
 			return null;
 		}
 		Map queryMap = new HashMap();
+		UserAuth userAuth = new UserAuth();
 		queryMap.put("token",token);
-		User user = new User();
-		List<User> users = userService.selectAll(queryMap);
-		user = users == null || users.isEmpty() ? null:users.get(0);
-		return user;
+		List<UserAuth> userAuths = userAuthService.selectAll(queryMap);
+		userAuth = userAuths == null || userAuths.isEmpty() ? null : userAuths.get(0);
+		return userAuth;
 	}
 	/**
 	 * 是否需要检查登录权限
@@ -161,7 +164,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 	private boolean needToCheckAuthorization(Method method){
 		return method.getAnnotation(Authorization.class)!=null;
 	}
-	
+
 	/**
 	 * 是否进行签名认证
 	 * @param method
@@ -184,8 +187,8 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 		return method.getAnnotation(Decrypt.class)!=null;
 	}
 
-	
-	
+
+
 	/**
 	 * 构建param参数
 	 * @param param
@@ -204,7 +207,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 		param = param.replaceAll(" ", "+");
 		String key = "";
 		Map<String, Object> map = null;
-		if(isEncrypt){			
+		if(isEncrypt){
 			if(existUser){
 				key = secretKey;
 			}else{

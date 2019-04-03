@@ -4,22 +4,21 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
-public class User implements Serializable {
-    private static final long serialVersionUID = 1856041808149294222L;
+public class Users implements Serializable {
+    private static final long serialVersionUID = 6904252020328789320L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private Date createTime;
 
-    private String password;
-
-    private String secretKey;
+    private Date updateTime;
 
     @Override
     public String toString() {
@@ -29,9 +28,8 @@ public class User implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
-        sb.append(", password=").append(password);
-        sb.append(", secretKey=").append(secretKey);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
         sb.append("]");
         return sb.toString();
     }
