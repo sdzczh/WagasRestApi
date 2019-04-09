@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zh.program.Dao.CouponMapper">
+  <resultMap id="BaseResultMap" type="com.zh.program.Entrty.Coupon">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="level" jdbcType="TINYINT" property="level" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="remain" jdbcType="DECIMAL" property="remain" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="effective_time" jdbcType="TIMESTAMP" property="effectiveTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, score, level, amount, remain, price, effective_time, create_time, update_time
+  </sql>
+  <insert id="insert" parameterType="com.zh.program.Entrty.Coupon">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into coupon (score, level, amount, 
+      remain, price, effective_time, 
+      create_time, update_time)
+    values (#{score,jdbcType=DECIMAL}, #{level,jdbcType=TINYINT}, #{amount,jdbcType=DECIMAL}, 
+      #{remain,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{effectiveTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zh.program.Entrty.Coupon">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="score != null">
+        score,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="remain != null">
+        remain,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="effectiveTime != null">
+        effective_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=TINYINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="remain != null">
+        #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="effectiveTime != null">
+        #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.zh.program.Entrty.Coupon">
+    update coupon
+    set score = #{score,jdbcType=DECIMAL},
+      level = #{level,jdbcType=TINYINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      remain = #{remain,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zh.program.Entrty.Coupon">
+    update coupon
+    <set>
+      <if test="score != null">
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=TINYINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="remain != null">
+        remain = #{remain,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="effectiveTime != null">
+        effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coupon
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coupon
+    where 1=1 
+    <if test="score != null">
+       and  score = #{score,jdbcType=DECIMAL}
+    </if>
+    <if test="level != null">
+       and  level = #{level,jdbcType=TINYINT}
+    </if>
+    <if test="amount != null">
+       and  amount = #{amount,jdbcType=DECIMAL}
+    </if>
+    <if test="remain != null">
+       and  remain = #{remain,jdbcType=DECIMAL}
+    </if>
+    <if test="price != null">
+       and  price = #{price,jdbcType=DECIMAL}
+    </if>
+    <if test="effectiveTime != null">
+       and  effective_time = #{effectiveTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTime != null">
+       and  create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null">
+       and  update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+     order by id desc 
+  </select>
+  <select id="selectPaging" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coupon
+    where 1=1 
+    <if test="score != null">
+       and  score = #{score,jdbcType=DECIMAL}
+    </if>
+    <if test="level != null">
+       and  level = #{level,jdbcType=TINYINT}
+    </if>
+    <if test="amount != null">
+       and  amount = #{amount,jdbcType=DECIMAL}
+    </if>
+    <if test="remain != null">
+       and  remain = #{remain,jdbcType=DECIMAL}
+    </if>
+    <if test="price != null">
+       and  price = #{price,jdbcType=DECIMAL}
+    </if>
+    <if test="effectiveTime != null">
+       and  effective_time = #{effectiveTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTime != null">
+       and  create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null">
+       and  update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+     order by id desc limit #{firstResult,jdbcType=INTEGER},#{maxResult,jdbcType=INTEGER}
+  </select>
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(*) 
+    from coupon 
+    where 1=1 
+    <if test="score != null">
+       and  score = #{score,jdbcType=DECIMAL}
+    </if>
+    <if test="level != null">
+       and  level = #{level,jdbcType=TINYINT}
+    </if>
+    <if test="amount != null">
+       and  amount = #{amount,jdbcType=DECIMAL}
+    </if>
+    <if test="remain != null">
+       and  remain = #{remain,jdbcType=DECIMAL}
+    </if>
+    <if test="price != null">
+       and  price = #{price,jdbcType=DECIMAL}
+    </if>
+    <if test="effectiveTime != null">
+       and  effective_time = #{effectiveTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="createTime != null">
+       and  create_time = #{createTime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updateTime != null">
+       and  update_time = #{updateTime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+</mapper>
