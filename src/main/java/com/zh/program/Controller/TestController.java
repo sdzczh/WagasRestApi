@@ -38,7 +38,6 @@ public class TestController {
     @PostMapping("get")
     public String get(@CurrentUser UserAuth userAuth, HttpServletRequest request){
         List<Users> list = usersService.selectAll(new HashMap<>());
-        System.out.printf(request.getAttribute("user").toString());
         return JSONObject.toJSONString(list);
     }
     @ResponseBody
