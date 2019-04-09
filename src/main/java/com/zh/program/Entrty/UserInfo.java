@@ -30,7 +30,7 @@ public class UserInfo implements Serializable {
 
     private String nickName;
 
-    private Boolean sex;
+    private Integer sex;
 
     private String headImgUrl;
 

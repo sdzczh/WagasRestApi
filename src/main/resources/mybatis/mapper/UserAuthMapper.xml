@@ -6,6 +6,7 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="identity_type" jdbcType="TINYINT" property="identityType" />
     <result column="token" jdbcType="VARCHAR" property="token" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="auth" jdbcType="TINYINT" property="auth" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -17,11 +18,11 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user_auth (user_id, identity_type, token, 
+    insert into user_auth (user_id, identity_type, token, open_id,
       auth, create_time, update_time
       )
-    values (#{userId,jdbcType=INTEGER}, #{identityType,jdbcType=TINYINT}, #{token,jdbcType=VARCHAR}, 
-      #{auth,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    values (#{userId,jdbcType=INTEGER}, #{identityType,jdbcType=TINYINT}, #{token,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+    #{auth,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zh.program.Entrty.UserAuth">
@@ -38,6 +39,9 @@
       </if>
       <if test="token != null">
         token,
+      </if>
+      <if test="openId != null">
+        open_id,
       </if>
       <if test="auth != null">
         auth,
@@ -59,6 +63,9 @@
       <if test="token != null">
         #{token,jdbcType=VARCHAR},
       </if>
+      <if test="openId != null">
+        #{open_id,jdbcType=VARCHAR},
+      </if>
       <if test="auth != null">
         #{auth,jdbcType=TINYINT},
       </if>
@@ -75,6 +82,7 @@
     set user_id = #{userId,jdbcType=INTEGER},
       identity_type = #{identityType,jdbcType=TINYINT},
       token = #{token,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
       auth = #{auth,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
@@ -91,6 +99,9 @@
       </if>
       <if test="token != null">
         token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
       <if test="auth != null">
         auth = #{auth,jdbcType=TINYINT},
@@ -128,6 +139,9 @@
     <if test="token != null">
        and  token = #{token,jdbcType=VARCHAR}
     </if>
+    <if test="openId != null">
+       and  open_id = #{openId,jdbcType=VARCHAR}
+    </if>
     <if test="auth != null">
        and  auth = #{auth,jdbcType=TINYINT}
     </if>
@@ -153,6 +167,9 @@
     <if test="token != null">
        and  token = #{token,jdbcType=VARCHAR}
     </if>
+    <if test="openId != null">
+       and  open_id = #{openId,jdbcType=VARCHAR}
+    </if>
     <if test="auth != null">
        and  auth = #{auth,jdbcType=TINYINT}
     </if>
@@ -176,6 +193,9 @@
     </if>
     <if test="token != null">
        and  token = #{token,jdbcType=VARCHAR}
+    </if>
+    <if test="openId != null">
+       and  open_id = #{openId,jdbcType=VARCHAR}
     </if>
     <if test="auth != null">
        and  auth = #{auth,jdbcType=TINYINT}

@@ -17,11 +17,13 @@ public class UserAuth implements Serializable {
 
     private Integer userId;
 
-    private Byte identityType;
+    private Integer identityType;
+
+    private String openId;
 
     private String token;
 
-    private Byte auth;
+    private Integer auth;
 
     private Date createTime;
 
@@ -39,6 +41,7 @@ public class UserAuth implements Serializable {
         sb.append(", userId=").append(userId);
         sb.append(", identityType=").append(identityType);
         sb.append(", token=").append(token);
+        sb.append(", openId=").append(openId);
         sb.append(", auth=").append(auth);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

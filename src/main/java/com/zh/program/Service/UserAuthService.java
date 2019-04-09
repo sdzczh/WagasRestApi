@@ -81,4 +81,6 @@ public interface UserAuthService {
      * @date: 2019-04-03 16:38:59
      **/ 
     int selectCount(Map<Object, Object> param);
+
+    UserAuth getUser(String code);
 }
