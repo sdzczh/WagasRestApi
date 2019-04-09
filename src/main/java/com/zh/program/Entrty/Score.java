@@ -4,70 +4,48 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-04
- */
-@Entity
-@Table(name = "score")
 @Data
+@Table(name = "score")
+@Entity
 public class Score implements Serializable {
+    private static final long serialVersionUID = -6733028433979908629L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
+
     private Integer userId;
-    /**
-     * 用户级别
-     */
-    private Integer level;
-    /**
-     * 可用积分
-     */
-    private BigDecimal availBalance;
-    /**
-     * 冻结积分
-     */
-    private BigDecimal frozenBalance;
-    /**
-     * 累计积分
-     */
-    private BigDecimal addBalance;
-    /**
-     * 创建时间
-     */
+
+    private Byte level;
+
+    private Integer availBalance;
+
+    private Integer frozenBalance;
+
+    private Integer addBalance;
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
     @Override
     public String toString() {
-        return "Score{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", level=" + level +
-        ", availBalance=" + availBalance +
-        ", frozenBalance=" + frozenBalance +
-        ", addBalance=" + addBalance +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", level=").append(level);
+        sb.append(", availBalance=").append(availBalance);
+        sb.append(", frozenBalance=").append(frozenBalance);
+        sb.append(", addBalance=").append(addBalance);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

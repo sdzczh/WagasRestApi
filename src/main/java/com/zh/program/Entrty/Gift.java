@@ -7,63 +7,44 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-08
- */
 @Entity
 @Table(name = "gift")
 @Data
 public class Gift implements Serializable {
+    private static final long serialVersionUID = 7074158935160535648L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 礼物名称
-     */
+
     private String giftName;
-    /**
-     * 图片url
-     */
+
     private String imgUrl;
-    /**
-     * 类型 0礼物卡 1美食
-     */
-    private Integer type;
-    /**
-     * 价格
-     */
+
+    private Byte type;
+
     private BigDecimal price;
-    /**
-     * 创建时间
-     */
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
 
     @Override
     public String toString() {
-        return "Gift{" +
-        ", id=" + id +
-        ", giftName=" + giftName +
-        ", imgUrl=" + imgUrl +
-        ", type=" + type +
-        ", price=" + price +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", giftName=").append(giftName);
+        sb.append(", imgUrl=").append(imgUrl);
+        sb.append(", type=").append(type);
+        sb.append(", price=").append(price);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

@@ -1,91 +1,64 @@
 package com.zh.program.Entrty;
 
 import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-04
- */
 @Entity
-@Table(name = "user_info")
 @Data
+@Table(name = "user_info")
 public class UserInfo implements Serializable {
+    private static final long serialVersionUID = -7376704816488022537L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
+
     private Integer userId;
-    /**
-     * 城市
-     */
+
     private String city;
-    /**
-     * 手机号
-     */
+
     private String phone;
-    /**
-     * 电子邮箱
-     */
+
     private String email;
-    /**
-     * 兴趣
-     */
-    private Integer interest;
-    /**
-     * 生日
-     */
+
+    private Byte interest;
+
     private Date birthday;
-    /**
-     * 微信昵称
-     */
+
     private String nickName;
-    /**
-     * 性别
-     */
-    private Integer sex;
-    /**
-     * 微信头像url
-     */
+
+    private Boolean sex;
+
     private String headImgUrl;
-    /**
-     * 创建时间
-     */
+
     private Date createTime;
-    /**
-     * 修改时间
-     */
+
     private Date updateTime;
+
 
     @Override
     public String toString() {
-        return "UserInfo{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", city=" + city +
-        ", phone=" + phone +
-        ", email=" + email +
-        ", interest=" + interest +
-        ", birthday=" + birthday +
-        ", nickName=" + nickName +
-        ", sex=" + sex +
-        ", headImgUrl=" + headImgUrl +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", city=").append(city);
+        sb.append(", phone=").append(phone);
+        sb.append(", email=").append(email);
+        sb.append(", interest=").append(interest);
+        sb.append(", birthday=").append(birthday);
+        sb.append(", nickName=").append(nickName);
+        sb.append(", sex=").append(sex);
+        sb.append(", headImgUrl=").append(headImgUrl);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

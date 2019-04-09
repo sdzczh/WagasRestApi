@@ -7,62 +7,43 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-04
- */
+@Data
 @Entity
 @Table(name = "wallet")
-@Data
 public class Wallet implements Serializable {
+    private static final long serialVersionUID = 4376397908557111417L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
+
     private Integer userId;
-    /**
-     * 会员卡编号
-     */
+
     private String walletNumber;
-    /**
-     * 可用金额
-     */
+
     private BigDecimal availBalance;
-    /**
-     * 冻结金额
-     */
+
     private BigDecimal frozenBalance;
-    /**
-     * 创建时间
-     */
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
     @Override
     public String toString() {
-        return "Wallet{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", walletNumber=" + walletNumber +
-        ", availBalance=" + availBalance +
-        ", frozenBalance=" + frozenBalance +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", walletNumber=").append(walletNumber);
+        sb.append(", availBalance=").append(availBalance);
+        sb.append(", frozenBalance=").append(frozenBalance);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

@@ -6,58 +6,41 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-04
- */
 @Entity
 @Table(name = "user_login_log")
 @Data
-public class UserLoginLog implements Serializable{
+public class UserLoginLog implements Serializable {
+    private static final long serialVersionUID = -7919523432172209922L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
+
     private Integer userId;
-    /**
-     * 是否成功 0失败 1成功
-     */
-    private Integer succeed;
-    /**
-     * IP
-     */
+
+    private Boolean succeed;
+
     private String ip;
-    /**
-     * 创建时间
-     */
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
 
     @Override
     public String toString() {
-        return "UserLoginLog{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", succeed=" + succeed +
-        ", ip=" + ip +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", succeed=").append(succeed);
+        sb.append(", ip=").append(ip);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

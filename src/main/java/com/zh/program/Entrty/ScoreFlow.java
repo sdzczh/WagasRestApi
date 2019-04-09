@@ -4,81 +4,55 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-04
- */
 @Entity
-@Table(name = "score_flow")
 @Data
-public class ScoreFlow implements Serializable{
+@Table(name = "score_flow")
+public class ScoreFlow implements Serializable {
+    private static final long serialVersionUID = -5634269323202286098L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
+
     private Integer userId;
-    /**
-     * 操作类型
-     */
-    private Integer operType;
-    /**
-     * 操作人ID
-     */
+
+    private Byte operType;
+
     private Integer operId;
-    /**
-     * 操作积分
-     */
-    private BigDecimal amount;
-    /**
-     * 操作后积分
-     */
-    private BigDecimal resultAmount;
-    /**
-     * 积分过期时间
-     */
+
+    private Integer amount;
+
+    private Integer resultAmount;
+
     private Date endTime;
-    /**
-     * 状态 0有效 1过期
-     */
-    private Integer state;
-    /**
-     * 创建时间
-     */
+
+    private Byte state;
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
 
     @Override
     public String toString() {
-        return "ScoreFlow{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", operType=" + operType +
-        ", operId=" + operId +
-        ", amount=" + amount +
-        ", resultAmount=" + resultAmount +
-        ", endTime=" + endTime +
-        ", state=" + state +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", operType=").append(operType);
+        sb.append(", operId=").append(operId);
+        sb.append(", amount=").append(amount);
+        sb.append(", resultAmount=").append(resultAmount);
+        sb.append(", endTime=").append(endTime);
+        sb.append(", state=").append(state);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

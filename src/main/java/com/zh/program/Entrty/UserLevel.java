@@ -6,43 +6,33 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-04
- */
 @Entity
-@Table(name = "user_level")
 @Data
-public class UserLevel implements  Serializable{
+@Table(name = "user_level")
+public class UserLevel implements Serializable {
+    private static final long serialVersionUID = 6490460412268550129L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 会员等级名称
-     */
+
     private String name;
-    /**
-     * 折扣系数
-     */
+
     private BigDecimal discount;
+
 
 
     @Override
     public String toString() {
-        return "UserLevel{" +
-        ", id=" + id +
-        ", name=" + name +
-        ", discount=" + discount +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", name=").append(name);
+        sb.append(", discount=").append(discount);
+        sb.append("]");
+        return sb.toString();
     }
 }

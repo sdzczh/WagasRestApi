@@ -7,73 +7,50 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-08
- */
 @Entity
 @Table(name = "coupon")
 @Data
 public class Coupon implements Serializable {
+    private static final long serialVersionUID = 2948314149009269937L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 所需积分
-     */
-    private BigDecimal score;
-    /**
-     * 所需等级
-     */
-    private Integer level;
-    /**
-     * 总量
-     */
-    private BigDecimal amount;
-    /**
-     * 剩余数量
-     */
-    private BigDecimal remain;
-    /**
-     * 单价
-     */
+
+    private Integer score;
+
+    private Byte level;
+
+    private Integer amount;
+
+    private Integer remain;
+
     private BigDecimal price;
-    /**
-     * 有效期至
-     */
+
     private Date effectiveTime;
-    /**
-     * 创建时间
-     */
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
 
     @Override
     public String toString() {
-        return "Coupon{" +
-        ", id=" + id +
-        ", score=" + score +
-        ", level=" + level +
-        ", amount=" + amount +
-        ", remain=" + remain +
-        ", price=" + price +
-        ", effectiveTime=" + effectiveTime +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", score=").append(score);
+        sb.append(", level=").append(level);
+        sb.append(", amount=").append(amount);
+        sb.append(", remain=").append(remain);
+        sb.append(", price=").append(price);
+        sb.append(", effectiveTime=").append(effectiveTime);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

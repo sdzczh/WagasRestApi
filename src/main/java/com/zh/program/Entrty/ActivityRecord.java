@@ -4,66 +4,45 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-08
- */
 @Entity
 @Table(name = "activity_record")
 @Data
 public class ActivityRecord implements Serializable {
+    private static final long serialVersionUID = 5430530914944566425L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
-    private Integer userId;
-    /**
-     * 活动ID
-     */
-    private Integer activityId;
-    /**
-     * 购买商品数量
-     */
-    private BigDecimal number;
-    /**
-     * 类型 0购买 1赠送
-     */
-    private Integer type;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
+    private Integer userId;
+
+    private Integer activityId;
+
+    private Short number;
+
+    private Byte type;
+
+    private Date createTime;
+
+    private Date updateTime;
 
     @Override
     public String toString() {
-        return "ActivityRecord{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", activityId=" + activityId +
-        ", number=" + number +
-        ", type=" + type +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", activityId=").append(activityId);
+        sb.append(", number=").append(number);
+        sb.append(", type=").append(type);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

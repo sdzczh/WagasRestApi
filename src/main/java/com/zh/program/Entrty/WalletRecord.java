@@ -7,72 +7,49 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-04
- */
-@Entity
 @Table(name = "wallet_record")
 @Data
-public class WalletRecord implements Serializable{
+@Entity
+public class WalletRecord implements Serializable {
+    private static final long serialVersionUID = -5421163085314757122L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
+
     private Integer userId;
-    /**
-     * 类型 0储值卡 1礼物
-     */
-    private Integer type;
-    /**
-     * 订单号
-     */
+
+    private Byte type;
+
     private String orderNumber;
-    /**
-     * 金额
-     */
+
     private BigDecimal amount;
-    /**
-     * 操作后金额
-     */
+
     private BigDecimal accBalance;
-    /**
-     * 积分
-     */
-    private BigDecimal score;
-    /**
-     * 创建时间
-     */
+
+    private Integer score;
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
     @Override
     public String toString() {
-        return "Record{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", type=" + type +
-        ", orderNumber=" + orderNumber +
-        ", amount=" + amount +
-        ", accBalance=" + accBalance +
-        ", score=" + score +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", type=").append(type);
+        sb.append(", orderNumber=").append(orderNumber);
+        sb.append(", amount=").append(amount);
+        sb.append(", accBalance=").append(accBalance);
+        sb.append(", score=").append(score);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }

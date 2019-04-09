@@ -7,67 +7,46 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author zhaohe
- * @since 2019-04-08
- */
 @Entity
 @Table(name = "bill")
 @Data
 public class Bill implements Serializable {
+    private static final long serialVersionUID = -6754086764338668045L;
 
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * ID
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    /**
-     * 用户ID
-     */
+
     private Integer userId;
-    /**
-     * 操作类型 0钱包 1优惠券 2活动 3礼物
-     */
-    private Integer type;
-    /**
-     * 操作数值
-     */
+
+    private Byte type;
+
     private BigDecimal amount;
-    /**
-     * 操作后数值
-     */
+
     private BigDecimal accAmount;
-    /**
-     * 备注
-     */
+
     private String remark;
-    /**
-     * 创建时间
-     */
+
     private Date createTime;
-    /**
-     * 更新时间
-     */
+
     private Date updateTime;
 
     @Override
     public String toString() {
-        return "Bill{" +
-        ", id=" + id +
-        ", userId=" + userId +
-        ", type=" + type +
-        ", amount=" + amount +
-        ", accAmount=" + accAmount +
-        ", remark=" + remark +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        "}";
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append(", id=").append(id);
+        sb.append(", userId=").append(userId);
+        sb.append(", type=").append(type);
+        sb.append(", amount=").append(amount);
+        sb.append(", accAmount=").append(accAmount);
+        sb.append(", remark=").append(remark);
+        sb.append(", createTime=").append(createTime);
+        sb.append(", updateTime=").append(updateTime);
+        sb.append("]");
+        return sb.toString();
     }
 }
